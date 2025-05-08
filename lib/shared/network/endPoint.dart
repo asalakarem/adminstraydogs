@@ -15,3 +15,5 @@ const LOGIN = 'users/loginadmin';
 const GET_NGOS_NOT_APPROVED = 'ngos/findallngosnotapproved';
 
 const APPROVE_ORG = 'ngos/aproveNgo';
+
+const ACTIVE_ORG = 'ngos/activeNgo';

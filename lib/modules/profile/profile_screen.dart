@@ -19,9 +19,9 @@ class ProfileScreen extends StatelessWidget {
         if (cubit.loginModel == null) {
           return const Center(child: CircularProgressIndicator());
         }
-        nameController.text = cubit.loginModel!.name ?? '';
-        emailController.text = cubit.loginModel!.email ?? '';
-        phoneNumberController.text = cubit.loginModel!.phoneNumber?.toString() ?? '';
+        nameController.text = cubit.loginModel!.name;
+        emailController.text = cubit.loginModel!.email;
+        phoneNumberController.text = cubit.loginModel!.phoneNumber.toString();
         return SingleChildScrollView(
           padding: const EdgeInsets.all(20.0),
           child: Column(

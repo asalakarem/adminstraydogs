@@ -32,6 +32,14 @@ class MainGetOrgApproveDataErrorState extends MainStates {
   MainGetOrgApproveDataErrorState(this.error);
 }
 
+class MainActivateOrgSuccessState extends MainStates {}
+
+class MainActivateOrgErrorState extends MainStates {
+  final String error;
+
+  MainActivateOrgErrorState(this.error);
+}
+
 class MainApproveOrgSuccessState extends MainStates {}
 
 class MainApproveOrgErrorState extends MainStates {

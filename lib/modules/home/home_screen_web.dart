@@ -185,6 +185,7 @@ class HomeScreenWeb extends StatelessWidget {
                                             ? buildUserItem(cubit.users[index])
                                             : buildOrgItem(
                                               cubit.organizations[index],
+                                              context,
                                             ),
                                 itemCount:
                                     cubit.isUserSelected
@@ -312,7 +313,7 @@ class HomeScreenWeb extends StatelessWidget {
               children: [
                 const Icon(Icons.calendar_today, size: 20),
                 const SizedBox(width: 8),
-                Text('Joined: ${model.dateJoined?.substring(0, 10)}'),
+                Text('Joined: ${model.dateJoined.substring(0, 10)}'),
               ],
             ),
           ],
@@ -321,7 +322,8 @@ class HomeScreenWeb extends StatelessWidget {
     );
   }
 
-  Widget buildOrgItem(OrgModel model) {
+  Widget buildOrgItem(OrgModel model, BuildContext context) {
+    final isActive = model.isActive != 0;
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8.0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -389,7 +391,35 @@ class HomeScreenWeb extends StatelessWidget {
               children: [
                 const Icon(Icons.calendar_today, size: 20),
                 const SizedBox(width: 8),
-                Text('Joined: ${model.dateJoined?.substring(0, 10)}'),
+                Text('Joined: ${model.dateJoined.substring(0, 10)}'),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                const Icon(Icons.done, size: 20),
+                const SizedBox(width: 8),
+                const Text('Status:'),
+                const SizedBox(width: 8),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                  ),
+                  onPressed: () {
+                    MainCubit.get(context).activateOrg(
+                      isActive: isActive ? 0 : 1,
+                      email: model.email,
+                    );
+                  },
+                  child: Text(
+                    isActive ? 'Inactivate' : 'Activate',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: isActive ? Colors.red : Colors.green,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               ],
             ),
           ],

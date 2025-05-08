@@ -1,12 +1,13 @@
 class OrgModel {
-  final int? ngoId;
-  final String? name;
-  final String? email;
-  final String? password;
-  final String? address;
-  final int? phoneNumber;
-  final String? dateJoined;
-  final int? approvedNgo;
+  final int ngoId;
+  final String name;
+  final String email;
+  final String password;
+  final String address;
+  final int phoneNumber;
+  final String dateJoined;
+  final int approvedNgo;
+  final int isActive;
 
   OrgModel({
     required this.ngoId,
@@ -17,6 +18,7 @@ class OrgModel {
     required this.phoneNumber,
     required this.dateJoined,
     required this.approvedNgo,
+    required this.isActive,
   });
 
   factory OrgModel.fromJson(Map<String, dynamic> json) {
@@ -29,6 +31,7 @@ class OrgModel {
       phoneNumber: json['phoneNumber'],
       dateJoined: json['dateJoined'],
       approvedNgo: json['approvedNgo'],
+      isActive: json['isActive'],
     );
   }
 
@@ -42,6 +45,7 @@ class OrgModel {
       'phoneNumber': phoneNumber,
       'dateJoined': dateJoined,
       'approvedNgo': approvedNgo,
+      'isActive': isActive,
     };
   }
 }

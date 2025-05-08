@@ -175,7 +175,7 @@ class RequestsScreen extends StatelessWidget {
               children: [
                 const Icon(Icons.numbers, size: 20),
                 const SizedBox(width: 8),
-                Text('Request ID: ${model.requestId ?? "N/A"}'),
+                Text('Request ID: ${model.requestId}'),
               ],
             ),
             const SizedBox(height: 8),
@@ -183,7 +183,7 @@ class RequestsScreen extends StatelessWidget {
               children: [
                 const Icon(Icons.badge, size: 20),
                 const SizedBox(width: 8),
-                Text('User ID: ${model.userId ?? "N/A"}'),
+                Text('User ID: ${model.userId}'),
               ],
             ),
             const SizedBox(height: 8),
@@ -191,7 +191,7 @@ class RequestsScreen extends StatelessWidget {
               children: [
                 const Icon(Icons.person, size: 20),
                 const SizedBox(width: 8),
-                Text('User Name: ${model.userName ?? "N/A"}'),
+                Text('User Name: ${model.userName}'),
               ],
             ),
             const SizedBox(height: 8),
@@ -199,7 +199,7 @@ class RequestsScreen extends StatelessWidget {
               children: [
                 const Icon(Icons.phone, size: 20),
                 const SizedBox(width: 8),
-                Text('Phone: ${model.phoneNumber ?? "N/A"}'),
+                Text('Phone: ${model.phoneNumber}'),
               ],
             ),
             const SizedBox(height: 8),
@@ -207,7 +207,7 @@ class RequestsScreen extends StatelessWidget {
               children: [
                 const Icon(Icons.location_on, size: 20),
                 const SizedBox(width: 8),
-                Text('Address: ${model.streetAddress ?? "N/A"}'),
+                Text('Address: ${model.streetAddress}'),
               ],
             ),
             const SizedBox(height: 8),
@@ -217,7 +217,7 @@ class RequestsScreen extends StatelessWidget {
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    'Description: ${model.description ?? "N/A"}',
+                    'Description: ${model.description}',
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -229,7 +229,7 @@ class RequestsScreen extends StatelessWidget {
               children: [
                 const Icon(Icons.pets, size: 20),
                 const SizedBox(width: 8),
-                Text('Dogs Count: ${model.dogsCount ?? "N/A"}'),
+                Text('Dogs Count: ${model.dogsCount}'),
               ],
             ),
             const SizedBox(height: 8),
@@ -238,7 +238,7 @@ class RequestsScreen extends StatelessWidget {
                 const Icon(Icons.timelapse, size: 20),
                 const SizedBox(width: 8),
                 Text(
-                  'Submitted: ${model.submissionTime?.substring(0, 10) ?? "N/A"}',
+                  'Submitted: ${model.submissionTime.substring(0, 10)}',
                 ),
               ],
             ),
@@ -249,7 +249,7 @@ class RequestsScreen extends StatelessWidget {
                   const Icon(Icons.check_circle, size: 20),
                   const SizedBox(width: 8),
                   Text(
-                    'Accepted: ${model.acceptedDate?.substring(0, 10) ?? "Pending"}',
+                    'Accepted: ${model.acceptedDate.substring(0, 10)}',
                   ),
                 ],
               ),
@@ -261,7 +261,7 @@ class RequestsScreen extends StatelessWidget {
                   const Icon(Icons.check_circle, size: 20),
                   const SizedBox(width: 8),
                   Text(
-                    'Mission Done: ${model.missionDoneDate?.substring(0, 10) ?? "Pending"}',
+                    'Mission Done: ${model.missionDoneDate.substring(0, 10)}',
                   ),
                 ],
               ),
@@ -271,7 +271,7 @@ class RequestsScreen extends StatelessWidget {
               children: [
                 const Icon(Icons.info_outline, size: 20),
                 const SizedBox(width: 8),
-                Text('Status: ${model.status ?? "Unknown"}'),
+                Text('Status: ${model.status}'),
               ],
             ),
           ],

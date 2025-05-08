@@ -25,26 +25,24 @@ class LoginScreen extends StatelessWidget implements PreferredSizeWidget {
     return BlocConsumer<MainCubit, MainStates>(
       listener: (BuildContext context, MainStates state) {
         if (state is MainLoginSuccessState) {
-          if (state.loginModel.userId != null) {
-            CacheHelper.saveData(
-              key: 'userId',
-              value: state.loginModel.userId!,
-            ).then((value) {
-              userId = state.loginModel.userId!;
-              navigateAndFinish(
-                context,
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    if (constraints.maxWidth <= 600) {
-                      return const MobileScreen();
-                    }
-                    return const WebScreen();
-                  },
-                ),
-              );
-            });
-          }
-        }
+          CacheHelper.saveData(
+            key: 'userId',
+            value: state.loginModel.userId,
+          ).then((value) {
+            userId = state.loginModel.userId;
+            navigateAndFinish(
+              context,
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  if (constraints.maxWidth <= 600) {
+                    return const MobileScreen();
+                  }
+                  return const WebScreen();
+                },
+              ),
+            );
+          });
+                }
       },
       builder: (BuildContext context, MainStates state) {
         final size = MediaQuery.of(context).size;
