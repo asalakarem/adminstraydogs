@@ -1,15 +1,15 @@
 class RequestModel {
-  final int requestId;
-  final int userId;
-  final String status;
-  final String submissionTime;
-  final String description;
-  final int dogsCount;
-  final String streetAddress;
-  final String userName;
-  final int phoneNumber;
-  final String acceptedDate;
-  final String missionDoneDate;
+  final int? requestId;
+  final int? userId;
+  final String? status;
+  final String? submissionTime;
+  final String? description;
+  final int? dogsCount;
+  final String? streetAddress;
+  final String? userName;
+  final int? phoneNumber;
+  final String? acceptedDate;
+  final String? missionDoneDate;
 
   RequestModel({
     required this.requestId,

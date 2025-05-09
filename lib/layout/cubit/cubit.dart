@@ -227,6 +227,13 @@ class MainCubit extends Cubit<MainStates> {
         });
   }
 
+  bool obscureText = true;
+
+  void changeObscureText() {
+    obscureText = !obscureText;
+    emit(MainChangeObscureTextState());
+  }
+
   void loadLoginData() {
     final jsonString = CacheHelper.getData(key: 'userData');
 

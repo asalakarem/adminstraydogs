@@ -238,7 +238,7 @@ class RequestsScreen extends StatelessWidget {
                 const Icon(Icons.timelapse, size: 20),
                 const SizedBox(width: 8),
                 Text(
-                  'Submitted: ${model.submissionTime.substring(0, 10)}',
+                  'Submitted: ${model.submissionTime?.substring(0, 10)}',
                 ),
               ],
             ),
@@ -249,7 +249,7 @@ class RequestsScreen extends StatelessWidget {
                   const Icon(Icons.check_circle, size: 20),
                   const SizedBox(width: 8),
                   Text(
-                    'Accepted: ${model.acceptedDate.substring(0, 10)}',
+                    'Accepted: ${model.acceptedDate?.substring(0, 10)}',
                   ),
                 ],
               ),
@@ -261,7 +261,7 @@ class RequestsScreen extends StatelessWidget {
                   const Icon(Icons.check_circle, size: 20),
                   const SizedBox(width: 8),
                   Text(
-                    'Mission Done: ${model.missionDoneDate.substring(0, 10)}',
+                    'Mission Done: ${model.missionDoneDate?.substring(0, 10)}',
                   ),
                 ],
               ),

@@ -29,7 +29,7 @@ class LoginScreen extends StatelessWidget implements PreferredSizeWidget {
             key: 'userId',
             value: state.loginModel.userId,
           ).then((value) {
-            userId = state.loginModel.userId;
+            userId = state.loginModel.userId!;
             navigateAndFinish(
               context,
               LayoutBuilder(
@@ -42,7 +42,7 @@ class LoginScreen extends StatelessWidget implements PreferredSizeWidget {
               ),
             );
           });
-                }
+        }
       },
       builder: (BuildContext context, MainStates state) {
         final size = MediaQuery.of(context).size;
@@ -165,15 +165,25 @@ class LoginScreen extends StatelessWidget implements PreferredSizeWidget {
                                       }
                                       return null;
                                     },
-                                    obscureText: true,
+                                    obscureText: cubit.obscureText,
                                     obscuringCharacter: '*',
                                     keyboardType: TextInputType.visiblePassword,
-                                    decoration: const InputDecoration(
+                                    decoration: InputDecoration(
                                       filled: true,
                                       fillColor: Colors.transparent,
                                       border: InputBorder.none,
-                                      prefixIcon: Icon(Icons.lock),
+                                      prefixIcon: const Icon(Icons.lock),
                                       hintText: 'Password',
+                                      suffixIcon: IconButton(
+                                        onPressed: () {
+                                          cubit.changeObscureText();
+                                        },
+                                        icon: Icon(
+                                          cubit.obscureText
+                                              ? Icons.visibility_off
+                                              : Icons.visibility,
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),

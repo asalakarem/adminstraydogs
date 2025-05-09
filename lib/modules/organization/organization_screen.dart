@@ -47,7 +47,7 @@ class OrganizationScreen extends StatelessWidget {
             onPressed: (context) {
               MainCubit.get(
                 context,
-              ).approveOrg(approvedNgo: 1, email: model.email);
+              ).approveOrg(approvedNgo: 1, email: '${model.email}');
             },
             backgroundColor: Colors.green,
             foregroundColor: Colors.white,
@@ -63,7 +63,7 @@ class OrganizationScreen extends StatelessWidget {
             onPressed: (context) {
               MainCubit.get(
                 context,
-              ).approveOrg(approvedNgo: 0, email: model.email);
+              ).approveOrg(approvedNgo: 0, email: '${model.email}');
             },
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
@@ -139,7 +139,7 @@ class OrganizationScreen extends StatelessWidget {
                 children: [
                   const Icon(Icons.calendar_today, size: 20),
                   const SizedBox(width: 8),
-                  Text('Joined: ${model.dateJoined.substring(0, 10)}'),
+                  Text('Joined: ${model.dateJoined?.substring(0, 10)}'),
                 ],
               ),
             ],

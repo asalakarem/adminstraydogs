@@ -313,7 +313,7 @@ class HomeScreenWeb extends StatelessWidget {
               children: [
                 const Icon(Icons.calendar_today, size: 20),
                 const SizedBox(width: 8),
-                Text('Joined: ${model.dateJoined.substring(0, 10)}'),
+                Text('Joined: ${model.dateJoined?.substring(0, 10)}'),
               ],
             ),
           ],
@@ -391,10 +391,9 @@ class HomeScreenWeb extends StatelessWidget {
               children: [
                 const Icon(Icons.calendar_today, size: 20),
                 const SizedBox(width: 8),
-                Text('Joined: ${model.dateJoined.substring(0, 10)}'),
+                Text('Joined: ${model.dateJoined?.substring(0, 10)}'),
               ],
             ),
-            const SizedBox(height: 8),
             Row(
               children: [
                 const Icon(Icons.done, size: 20),
@@ -408,7 +407,7 @@ class HomeScreenWeb extends StatelessWidget {
                   onPressed: () {
                     MainCubit.get(context).activateOrg(
                       isActive: isActive ? 0 : 1,
-                      email: model.email,
+                      email: '${model.email}',
                     );
                   },
                   child: Text(

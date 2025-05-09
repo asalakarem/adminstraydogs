@@ -95,3 +95,5 @@ class MainLoginErrorState extends MainStates {
 
   MainLoginErrorState(this.error);
 }
+
+class MainChangeObscureTextState extends MainStates {}

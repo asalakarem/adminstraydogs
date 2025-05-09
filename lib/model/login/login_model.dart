@@ -1,9 +1,9 @@
 class LoginModel {
-  final int userId;
-  final String name;
-  final String email;
-  final String password;
-  final int phoneNumber;
+  final int? userId;
+  final String? name;
+  final String? email;
+  final String? password;
+  final int? phoneNumber;
 
   LoginModel({
     required this.userId,

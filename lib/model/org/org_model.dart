@@ -1,13 +1,13 @@
 class OrgModel {
-  final int ngoId;
-  final String name;
-  final String email;
-  final String password;
-  final String address;
-  final int phoneNumber;
-  final String dateJoined;
-  final int approvedNgo;
-  final int isActive;
+  final int? ngoId;
+  final String? name;
+  final String? email;
+  final String? password;
+  final String? address;
+  final int? phoneNumber;
+  final String? dateJoined;
+  final int? approvedNgo;
+  final int? isActive;
 
   OrgModel({
     required this.ngoId,
