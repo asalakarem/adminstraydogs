@@ -8,6 +8,8 @@ class MainChangeBottomNavState extends MainStates {}
 
 class MainAppChangeModeState extends MainStates {}
 
+class MainFilterUsersState extends MainStates {}
+
 class MainGetUserDataState extends MainStates {}
 
 class MainGetUserDataErrorState extends MainStates {
@@ -15,6 +17,8 @@ class MainGetUserDataErrorState extends MainStates {
 
   MainGetUserDataErrorState(this.error);
 }
+
+class MainFilterOrgState extends MainStates {}
 
 class MainGetOrgDataState extends MainStates {}
 

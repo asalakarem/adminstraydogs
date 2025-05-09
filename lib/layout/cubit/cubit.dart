@@ -29,14 +29,14 @@ class MainCubit extends Cubit<MainStates> {
   }
 
   final List<Widget> screensWeb = [
-    const HomeScreenWeb(),
+    HomeScreenWeb(),
     const RequestsScreen(),
     const OrganizationScreen(),
     ProfileScreen(),
   ];
 
   final List<Widget> screensMobile = [
-    const HomeScreenMobile(),
+    HomeScreenMobile(),
     const RequestsScreen(),
     const OrganizationScreen(),
     ProfileScreen(),
@@ -56,6 +56,21 @@ class MainCubit extends Cubit<MainStates> {
     }
   }
 
+  List<UserModel> filteredUsers = [];
+
+  void filterUsers(String query) {
+    if (query.isEmpty) {
+      filteredUsers = users;
+    } else {
+      filteredUsers = users.where((user) {
+        final first = user.firstName?.toLowerCase() ?? '';
+        final last = user.lastName?.toLowerCase() ?? '';
+        return first.contains(query.toLowerCase()) || last.contains(query.toLowerCase());
+      }).toList();
+    }
+    emit(MainFilterUsersState());
+  }
+
   List<UserModel> users = [];
 
   void getUsers() {
@@ -63,12 +78,26 @@ class MainCubit extends Cubit<MainStates> {
         .then((value) {
           users =
               (value.data as List).map((e) => UserModel.fromJson(e)).toList();
+          filteredUsers = users;
           emit(MainGetUserDataState());
         })
         .catchError((dynamic error) {
           print(error.toString());
           emit(MainGetUserDataErrorState(error.toString()));
         });
+  }
+
+  List<OrgModel> filteredOrg = [];
+
+  void filterOrg(String query) {
+    if (query.isEmpty) {
+      filteredOrg = organizations;
+    } else {
+      filteredOrg = organizations
+          .where((org) => org.name!.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    }
+    emit(MainFilterOrgState());
   }
 
   List<OrgModel> organizations = [];
@@ -78,6 +107,7 @@ class MainCubit extends Cubit<MainStates> {
         .then((value) {
           organizations =
               (value.data as List).map((e) => OrgModel.fromJson(e)).toList();
+          filteredOrg = organizations;
           emit(MainGetOrgDataState());
         })
         .catchError((dynamic error) {

@@ -7,7 +7,9 @@ import 'package:straydogsadmin/model/org/org_model.dart';
 import 'package:straydogsadmin/model/user/user_model.dart';
 
 class HomeScreenWeb extends StatelessWidget {
-  const HomeScreenWeb({super.key});
+  final searchController = TextEditingController();
+
+  HomeScreenWeb({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -164,6 +166,31 @@ class HomeScreenWeb extends StatelessWidget {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 20.0,
+                                    ),
+                                    child: SearchBar(
+                                      padding: const WidgetStatePropertyAll<
+                                        EdgeInsets
+                                      >(EdgeInsets.symmetric(horizontal: 16.0)),
+                                      leading: const Icon(Icons.search),
+                                      hintText: 'Search',
+                                      controller: searchController,
+                                      onChanged: (value) {
+                                        cubit.isUserSelected
+                                            ? cubit.filterUsers(value)
+                                            : cubit.filterOrg(value);
+                                      },
+                                      onSubmitted: (value) {
+                                        cubit.isUserSelected
+                                            ? cubit.filterUsers(value)
+                                            : cubit.filterOrg(value);
+                                      },
+                                    ),
+                                  ),
+                                ),
                                 DropdownMenu<String>(
                                   initialSelection: cubit.selectedValue,
                                   label: Text(cubit.selectedValue),
@@ -182,15 +209,17 @@ class HomeScreenWeb extends StatelessWidget {
                                 itemBuilder:
                                     (context, index) =>
                                         cubit.isUserSelected
-                                            ? buildUserItem(cubit.users[index])
+                                            ? buildUserItem(
+                                              cubit.filteredUsers[index],
+                                            )
                                             : buildOrgItem(
-                                              cubit.organizations[index],
+                                              cubit.filteredOrg[index],
                                               context,
                                             ),
                                 itemCount:
                                     cubit.isUserSelected
-                                        ? cubit.users.length
-                                        : cubit.organizations.length,
+                                        ? cubit.filteredUsers.length
+                                        : cubit.filteredOrg.length,
                               ),
                             ),
                           ],
@@ -401,9 +430,7 @@ class HomeScreenWeb extends StatelessWidget {
                 const Text('Status:'),
                 const SizedBox(width: 8),
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.zero,
-                  ),
+                  style: ElevatedButton.styleFrom(padding: EdgeInsets.zero),
                   onPressed: () {
                     MainCubit.get(context).activateOrg(
                       isActive: isActive ? 0 : 1,

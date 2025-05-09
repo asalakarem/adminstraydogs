@@ -7,7 +7,9 @@ import 'package:straydogsadmin/model/org/org_model.dart';
 import 'package:straydogsadmin/model/user/user_model.dart';
 
 class HomeScreenMobile extends StatelessWidget {
-  const HomeScreenMobile({super.key});
+  final searchController = TextEditingController();
+
+  HomeScreenMobile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -144,6 +146,7 @@ class HomeScreenMobile extends StatelessWidget {
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 10.0,
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -169,21 +172,44 @@ class HomeScreenMobile extends StatelessWidget {
                               ),
                             ],
                           ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20.0,
+                            ),
+                            child: SearchBar(
+                              padding: const WidgetStatePropertyAll<
+                                  EdgeInsets
+                              >(EdgeInsets.symmetric(horizontal: 16.0)),
+                              leading: const Icon(Icons.search),
+                              hintText: 'Search',
+                              controller: searchController,
+                              onChanged: (value) {
+                                cubit.isUserSelected
+                                    ? cubit.filterUsers(value)
+                                    : cubit.filterOrg(value);
+                              },
+                              onSubmitted: (value) {
+                                cubit.isUserSelected
+                                    ? cubit.filterUsers(value)
+                                    : cubit.filterOrg(value);
+                              },
+                            ),
+                          ),
                           Expanded(
                             child: ListView.builder(
                               physics: const BouncingScrollPhysics(),
                               itemBuilder:
                                   (context, index) =>
                                       cubit.isUserSelected
-                                          ? buildUserItem(cubit.users[index])
+                                          ? buildUserItem(cubit.filteredUsers[index])
                                           : buildOrgItem(
-                                            cubit.organizations[index],
+                                            cubit.filteredOrg[index],
                                             context,
                                           ),
                               itemCount:
                                   cubit.isUserSelected
-                                      ? cubit.users.length
-                                      : cubit.organizations.length,
+                                      ? cubit.filteredUsers.length
+                                      : cubit.filteredUsers.length,
                             ),
                           ),
                         ],

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:straydogsadmin/layout/cubit/cubit.dart';
 import 'package:straydogsadmin/layout/cubit/states.dart';
+import 'package:straydogsadmin/modules/login/login_screen.dart';
+import 'package:straydogsadmin/shared/components/components.dart';
+import 'package:straydogsadmin/shared/network/local/cache_helper.dart';
 
 class MobileScreen extends StatelessWidget {
   const MobileScreen({super.key});
@@ -94,6 +97,18 @@ class MobileScreen extends StatelessWidget {
                   onTap: (){
                     cubit.changeIndex(3);
                     Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.login_outlined),
+                  title: const Text('Logout'),
+                  onTap: (){
+                    CacheHelper.removeData(key: 'userId').then((value) {
+                      if(value)
+                      {
+                        navigateAndFinish(context, LoginScreen());
+                      }
+                    });
                   },
                 ),
               ],

@@ -53,12 +53,7 @@ class LoginScreen extends StatelessWidget implements PreferredSizeWidget {
             child: Container(
               height: size.height,
               width: size.width,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/background.jpg'),
-                  fit: BoxFit.cover,
-                ),
-              ),
+              color: cubit.isDark ? Colors.white : Colors.black,
               child: Center(
                 child: LayoutBuilder(
                   builder: (context, constraints) {

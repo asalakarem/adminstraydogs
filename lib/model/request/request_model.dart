@@ -10,6 +10,8 @@ class RequestModel {
   final int? phoneNumber;
   final String? acceptedDate;
   final String? missionDoneDate;
+  final String? acceptedNgo;
+  final String? missionDoneNgo;
 
   RequestModel({
     required this.requestId,
@@ -23,6 +25,8 @@ class RequestModel {
     required this.phoneNumber,
     required this.acceptedDate,
     required this.missionDoneDate,
+    required this.acceptedNgo,
+    required this.missionDoneNgo,
   });
 
   factory RequestModel.fromJson(Map<String, dynamic> json) {
@@ -38,6 +42,8 @@ class RequestModel {
       phoneNumber: json['phoneNumber'],
       acceptedDate: json['acceptedDate'],
       missionDoneDate: json['missionDoneDate'],
+      acceptedNgo: json['acceptedNgo'],
+      missionDoneNgo: json['missionDoneNgo'],
     );
   }
 
@@ -54,6 +60,8 @@ class RequestModel {
       'phoneNumber': phoneNumber,
       'acceptedDate': acceptedDate,
       'missionDoneDate': missionDoneDate,
+      'acceptedNgo': acceptedNgo,
+      'missionDoneNgo': missionDoneNgo,
     };
   }
 }

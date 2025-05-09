@@ -253,6 +253,16 @@ class RequestsScreen extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  const Icon(Icons.person, size: 20),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Accepted By: ${model.acceptedNgo}',
+                  ),
+                ],
+              ),
             ],
             if (model.status == 'Mission Done') ...[
               const SizedBox(height: 8),
@@ -262,6 +272,16 @@ class RequestsScreen extends StatelessWidget {
                   const SizedBox(width: 8),
                   Text(
                     'Mission Done: ${model.missionDoneDate?.substring(0, 10)}',
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  const Icon(Icons.person, size: 20),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Mission Done By: ${model.missionDoneNgo}',
                   ),
                 ],
               ),

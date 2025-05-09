@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:straydogsadmin/layout/cubit/cubit.dart';
 import 'package:straydogsadmin/layout/cubit/states.dart';
+import 'package:straydogsadmin/modules/login/login_screen.dart';
+import 'package:straydogsadmin/shared/components/components.dart';
+import 'package:straydogsadmin/shared/network/local/cache_helper.dart';
 
 class WebScreen extends StatelessWidget {
   const WebScreen({super.key});
@@ -21,22 +24,28 @@ class WebScreen extends StatelessWidget {
                 onDestinationSelected: (index) {
                   cubit.changeIndex(index);
                 },
-                labelType: cubit.isExpanded ? NavigationRailLabelType.none : NavigationRailLabelType.none,
+                labelType: cubit.isExpanded
+                    ? NavigationRailLabelType.none
+                    : NavigationRailLabelType.none,
                 leading: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: 10.0,
                   children: [
+                    const SizedBox(height: 10),
                     Row(
-                      spacing: 10,
                       children: [
+                        const SizedBox(width: 10),
                         Image.asset('assets/images/logo.png', width: 40, height: 40),
-                        cubit.isExpanded ? const Text('Stray Dogs Admin') : const SizedBox.shrink(),
+                        const SizedBox(width: 10),
+                        if (cubit.isExpanded)
+                          const Text(
+                            'Stray Dogs Admin',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                       ],
                     ),
+                    const SizedBox(height: 20),
                     IconButton(
-                      icon: const Icon(
-                        Icons.brightness_4_outlined,
-                      ),
+                      icon: const Icon(Icons.brightness_4_outlined),
                       onPressed: () {
                         cubit.changeAppMode();
                       },
@@ -55,25 +64,50 @@ class WebScreen extends StatelessWidget {
                 destinations: const [
                   NavigationRailDestination(
                     icon: Icon(Icons.home_outlined),
-                    selectedIcon: Icon(Icons.home, color: Colors.blue),
+                    selectedIcon: Icon(Icons.home),
                     label: Text('Home'),
                   ),
                   NavigationRailDestination(
                     icon: Icon(Icons.request_page_outlined),
-                    selectedIcon: Icon(Icons.request_page, color: Colors.blue),
+                    selectedIcon: Icon(Icons.request_page),
                     label: Text('Requests'),
                   ),
                   NavigationRailDestination(
                     icon: Icon(Icons.group_outlined),
-                    selectedIcon: Icon(Icons.group, color: Colors.blue),
+                    selectedIcon: Icon(Icons.group),
                     label: Text('Organization'),
                   ),
                   NavigationRailDestination(
                     icon: Icon(Icons.person_outline),
-                    selectedIcon: Icon(Icons.person, color: Colors.blue),
+                    selectedIcon: Icon(Icons.person),
                     label: Text('Profile'),
                   ),
                 ],
+                trailing: Padding(
+                  padding: const EdgeInsets.only(bottom: 20.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Divider(),
+                      IconButton(
+                        icon: const Icon(Icons.logout),
+                        tooltip: 'Logout',
+                        onPressed: () {
+                          CacheHelper.removeData(key: 'userId').then((value) {
+                            if (value) {
+                              navigateAndFinish(context, LoginScreen());
+                            }
+                          });
+                        },
+                      ),
+                      if (cubit.isExpanded)
+                        const Padding(
+                          padding: EdgeInsets.only(top: 5.0),
+                          child: Text('Logout'),
+                        ),
+                    ],
+                  ),
+                ),
               ),
               const VerticalDivider(thickness: 1, width: 1),
               Expanded(child: cubit.screensWeb[cubit.currentIndex]),
