@@ -133,17 +133,32 @@ class MainCubit extends Cubit<MainStates> {
 
   void activateOrg({required int isActive, required String email}) {
     DioHelper.putData(
-          url: ACTIVE_ORG,
-          data: {'email': email, 'isActive': isActive},
-        )
-        .then((value) {
-          emit(MainActivateOrgSuccessState());
-        })
-        .catchError((dynamic error) {
-          print(error.toString());
-          emit(MainActivateOrgErrorState(error.toString()));
-        });
+      url: ACTIVE_ORG,
+      data: {'email': email, 'isActive': isActive},
+    ).then((value) {
+      // تحديث العنصر في القوائم
+      for (var i = 0; i < organizations.length; i++) {
+        if (organizations[i].email == email) {
+          organizations[i].isActive = isActive;
+          break;
+        }
+      }
+
+      // أيضاً تحديث القائمة المفلترة إذا كانت مستخدمة في الواجهة
+      for (var i = 0; i < filteredOrg.length; i++) {
+        if (filteredOrg[i].email == email) {
+          filteredOrg[i].isActive = isActive;
+          break;
+        }
+      }
+
+      emit(MainActivateOrgSuccessState());
+    }).catchError((dynamic error) {
+      print(error.toString());
+      emit(MainActivateOrgErrorState(error.toString()));
+    });
   }
+
 
   void approveOrg({required int approvedNgo, required String email}) {
     DioHelper.putData(

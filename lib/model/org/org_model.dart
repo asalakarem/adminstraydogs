@@ -7,7 +7,7 @@ class OrgModel {
   final int? phoneNumber;
   final String? dateJoined;
   final int? approvedNgo;
-  final int? isActive;
+  int? isActive;
 
   OrgModel({
     required this.ngoId,
