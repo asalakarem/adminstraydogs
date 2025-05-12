@@ -326,7 +326,7 @@ class HomeScreenWeb extends StatelessWidget {
               children: [
                 const Icon(Icons.lock, size: 20),
                 const SizedBox(width: 8),
-                Text('Password: ${model.password}'),
+                Text('Password: ${'*' * (model.password?.length ?? 0)}'),
               ],
             ),
             const SizedBox(height: 8),
@@ -396,7 +396,7 @@ class HomeScreenWeb extends StatelessWidget {
               children: [
                 const Icon(Icons.lock, size: 20),
                 const SizedBox(width: 8),
-                Text('Password: ${model.password}'),
+                Text('Password: ${'*' * (model.password?.length ?? 0)}'),
               ],
             ),
             const SizedBox(height: 8),
