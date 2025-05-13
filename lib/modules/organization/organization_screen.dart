@@ -25,11 +25,23 @@ class OrganizationScreen extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
               Expanded(
-                child: ListView.builder(
-                  itemBuilder:
-                      (context, index) => buildOrgItem(cubit.orgApprove[index]),
-                  itemCount: cubit.orgApprove.length,
-                ),
+                child:
+                    cubit.orgApprove.isEmpty
+                        ? const Center(
+                          child: Text(
+                            'No Organization',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                        )
+                        : ListView.builder(
+                          itemBuilder:
+                              (context, index) =>
+                                  buildOrgItem(cubit.orgApprove[index]),
+                          itemCount: cubit.orgApprove.length,
+                        ),
               ),
             ],
           ),
