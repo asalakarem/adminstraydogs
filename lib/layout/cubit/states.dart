@@ -101,3 +101,11 @@ class MainLoginErrorState extends MainStates {
 }
 
 class MainChangeObscureTextState extends MainStates {}
+
+class MainGetAllRequestsDataState extends MainStates {}
+
+class MainGetAllRequestsDataErrorState extends MainStates {
+  final String error;
+
+  MainGetAllRequestsDataErrorState(this.error);
+}

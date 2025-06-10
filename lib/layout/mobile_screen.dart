@@ -54,7 +54,7 @@ class MobileScreen extends StatelessWidget {
                         height: 30,
                         fit: BoxFit.fill,
                       ),
-                      const Text('Stray Dogs Admin'),
+                      const Text('Street2Shelter Admin'),
                     ],
                   ),
                 ),
@@ -80,8 +80,8 @@ class MobileScreen extends StatelessWidget {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.group),
-                  title: const Text('Organization SignUp'),
+                  leading: const ImageIcon(AssetImage('assets/images/org_req.png')),
+                  title: const Text('Organization Requests'),
                   selected: cubit.currentIndex == 2,
                   selectedTileColor: cubit.isDark ? Colors.grey[900] : Colors.grey[200],
                   onTap: (){
@@ -90,12 +90,22 @@ class MobileScreen extends StatelessWidget {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.person),
-                  title: const Text('Profile'),
+                  leading: const Icon(Icons.group),
+                  title: const Text('Organization Approve'),
                   selected: cubit.currentIndex == 3,
                   selectedTileColor: cubit.isDark ? Colors.grey[900] : Colors.grey[200],
                   onTap: (){
                     cubit.changeIndex(3);
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.person),
+                  title: const Text('Profile'),
+                  selected: cubit.currentIndex == 4,
+                  selectedTileColor: cubit.isDark ? Colors.grey[900] : Colors.grey[200],
+                  onTap: (){
+                    cubit.changeIndex(4);
                     Navigator.pop(context);
                   },
                 ),

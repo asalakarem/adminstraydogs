@@ -31,18 +31,7 @@ class WebScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        const SizedBox(width: 10),
-                        Image.asset('assets/images/logo.png', width: 40, height: 40),
-                        const SizedBox(width: 10),
-                        if (cubit.isExpanded)
-                          const Text(
-                            'Stray Dogs Admin',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                      ],
-                    ),
+                    Image.asset('assets/images/logo.png', width: 40, height: 40),
                     const SizedBox(height: 20),
                     IconButton(
                       icon: const Icon(Icons.brightness_4_outlined),
@@ -73,9 +62,14 @@ class WebScreen extends StatelessWidget {
                     label: Text('Requests'),
                   ),
                   NavigationRailDestination(
+                    icon: ImageIcon(AssetImage('assets/images/org_req.png')),
+                    selectedIcon: ImageIcon(AssetImage('assets/images/org_req_fill.png')),
+                    label: Text('Organization Requests'),
+                  ),
+                  NavigationRailDestination(
                     icon: Icon(Icons.group_outlined),
                     selectedIcon: Icon(Icons.group),
-                    label: Text('Organization'),
+                    label: Text('Organization Approve'),
                   ),
                   NavigationRailDestination(
                     icon: Icon(Icons.person_outline),

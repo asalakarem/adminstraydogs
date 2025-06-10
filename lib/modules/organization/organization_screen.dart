@@ -21,7 +21,7 @@ class OrganizationScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Organization',
+                'Organization Approve',
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
               Expanded(

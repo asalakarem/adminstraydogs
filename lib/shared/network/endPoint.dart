@@ -17,3 +17,6 @@ const GET_NGOS_NOT_APPROVED = 'ngos/findallngosnotapproved';
 const APPROVE_ORG = 'ngos/aproveNgo';
 
 const ACTIVE_ORG = 'ngos/activeNgo';
+
+const GET_ALL_REQUESTS = 'requests/getNgoRequstinfo';
+

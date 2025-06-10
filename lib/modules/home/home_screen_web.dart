@@ -95,6 +95,7 @@ class HomeScreenWeb extends StatelessWidget {
                                 PieChartData(
                                   sectionsSpace: 2,
                                   centerSpaceRadius: 40,
+                                  titleSunbeamLayout: true,
                                   sections: [
                                     PieChartSectionData(
                                       value: cubit.users.length.toDouble(),

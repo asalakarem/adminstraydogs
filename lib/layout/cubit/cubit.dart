@@ -9,6 +9,7 @@ import 'package:straydogsadmin/model/request/request_model.dart';
 import 'package:straydogsadmin/model/user/user_model.dart';
 import 'package:straydogsadmin/modules/home/home_screen_mobile.dart';
 import 'package:straydogsadmin/modules/home/home_screen_web.dart';
+import 'package:straydogsadmin/modules/org_requests/org_requests_screens.dart';
 import 'package:straydogsadmin/modules/organization/organization_screen.dart';
 import 'package:straydogsadmin/modules/profile/profile_screen.dart';
 import 'package:straydogsadmin/modules/requests/requests_screen.dart';
@@ -31,6 +32,7 @@ class MainCubit extends Cubit<MainStates> {
   final List<Widget> screensWeb = [
     HomeScreenWeb(),
     const RequestsScreen(),
+    const OrgRequestsScreens(),
     const OrganizationScreen(),
     ProfileScreen(),
   ];
@@ -38,6 +40,7 @@ class MainCubit extends Cubit<MainStates> {
   final List<Widget> screensMobile = [
     HomeScreenMobile(),
     const RequestsScreen(),
+    const OrgRequestsScreens(),
     const OrganizationScreen(),
     ProfileScreen(),
   ];
@@ -62,11 +65,13 @@ class MainCubit extends Cubit<MainStates> {
     if (query.isEmpty) {
       filteredUsers = users;
     } else {
-      filteredUsers = users.where((user) {
-        final first = user.firstName?.toLowerCase() ?? '';
-        final last = user.lastName?.toLowerCase() ?? '';
-        return first.contains(query.toLowerCase()) || last.contains(query.toLowerCase());
-      }).toList();
+      filteredUsers =
+          users.where((user) {
+            final first = user.firstName?.toLowerCase() ?? '';
+            final last = user.lastName?.toLowerCase() ?? '';
+            return first.contains(query.toLowerCase()) ||
+                last.contains(query.toLowerCase());
+          }).toList();
     }
     emit(MainFilterUsersState());
   }
@@ -93,9 +98,12 @@ class MainCubit extends Cubit<MainStates> {
     if (query.isEmpty) {
       filteredOrg = organizations;
     } else {
-      filteredOrg = organizations
-          .where((org) => org.name!.toLowerCase().contains(query.toLowerCase()))
-          .toList();
+      filteredOrg =
+          organizations
+              .where(
+                (org) => org.name!.toLowerCase().contains(query.toLowerCase()),
+              )
+              .toList();
     }
     emit(MainFilterOrgState());
   }
@@ -133,32 +141,33 @@ class MainCubit extends Cubit<MainStates> {
 
   void activateOrg({required int isActive, required String email}) {
     DioHelper.putData(
-      url: ACTIVE_ORG,
-      data: {'email': email, 'isActive': isActive},
-    ).then((value) {
-      // تحديث العنصر في القوائم
-      for (var i = 0; i < organizations.length; i++) {
-        if (organizations[i].email == email) {
-          organizations[i].isActive = isActive;
-          break;
-        }
-      }
+          url: ACTIVE_ORG,
+          data: {'email': email, 'isActive': isActive},
+        )
+        .then((value) {
+          // تحديث العنصر في القوائم
+          for (var i = 0; i < organizations.length; i++) {
+            if (organizations[i].email == email) {
+              organizations[i].isActive = isActive;
+              break;
+            }
+          }
 
-      // أيضاً تحديث القائمة المفلترة إذا كانت مستخدمة في الواجهة
-      for (var i = 0; i < filteredOrg.length; i++) {
-        if (filteredOrg[i].email == email) {
-          filteredOrg[i].isActive = isActive;
-          break;
-        }
-      }
+          // أيضاً تحديث القائمة المفلترة إذا كانت مستخدمة في الواجهة
+          for (var i = 0; i < filteredOrg.length; i++) {
+            if (filteredOrg[i].email == email) {
+              filteredOrg[i].isActive = isActive;
+              break;
+            }
+          }
 
-      emit(MainActivateOrgSuccessState());
-    }).catchError((dynamic error) {
-      print(error.toString());
-      emit(MainActivateOrgErrorState(error.toString()));
-    });
+          emit(MainActivateOrgSuccessState());
+        })
+        .catchError((dynamic error) {
+          print(error.toString());
+          emit(MainActivateOrgErrorState(error.toString()));
+        });
   }
-
 
   void approveOrg({required int approvedNgo, required String email}) {
     DioHelper.putData(
@@ -293,5 +302,22 @@ class MainCubit extends Cubit<MainStates> {
   void toggleRail() {
     isExpanded = !isExpanded;
     emit(MainChangeRailExpansionState());
+  }
+
+  List<RequestModel> allRequests = [];
+
+  void getAllRequests({required int orgId}) {
+    DioHelper.getData(url: GET_ALL_REQUESTS, query: {'ngoId': orgId})
+        .then((value) {
+          allRequests =
+              (value.data as List)
+                  .map((e) => RequestModel.fromJson(e))
+                  .toList();
+          emit(MainGetAllRequestsDataState());
+        })
+        .catchError((dynamic error) {
+          print(error.toString());
+          emit(MainGetAllRequestsDataErrorState(error.toString()));
+        });
   }
 }
