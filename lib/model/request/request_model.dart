@@ -12,6 +12,9 @@ class RequestModel {
   final String? missionDoneDate;
   final String? acceptedNgo;
   final String? missionDoneNgo;
+  final double latitude;
+  final double longitude;
+  final String? dogImage;
 
   RequestModel({
     required this.requestId,
@@ -27,6 +30,9 @@ class RequestModel {
     required this.missionDoneDate,
     required this.acceptedNgo,
     required this.missionDoneNgo,
+    required this.latitude,
+    required this.longitude,
+    required this.dogImage,
   });
 
   factory RequestModel.fromJson(Map<String, dynamic> json) {
@@ -44,6 +50,9 @@ class RequestModel {
       missionDoneDate: json['missionDoneDate'],
       acceptedNgo: json['acceptedNgo'],
       missionDoneNgo: json['missionDoneNgo'],
+      latitude: json['latitude'],
+      longitude: json['longitude'],
+      dogImage: json['dogImage'],
     );
   }
 
@@ -62,6 +71,9 @@ class RequestModel {
       'missionDoneDate': missionDoneDate,
       'acceptedNgo': acceptedNgo,
       'missionDoneNgo': missionDoneNgo,
+      'latitude': latitude,
+      'longitude': longitude,
+      'dogImage': dogImage,
     };
   }
 }

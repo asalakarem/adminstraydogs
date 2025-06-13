@@ -27,7 +27,7 @@ class MobileScreen extends StatelessWidget {
                   height: 30,
                   fit: BoxFit.fill,
                 ),
-                const Text('Stray Dogs Admin'),
+                const Text('Street2Shelter Admin'),
               ],
             ),
             actions: [

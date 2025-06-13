@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geocode/geocode.dart';
 import 'package:straydogsadmin/layout/cubit/states.dart';
 import 'package:straydogsadmin/model/login/login_model.dart';
 import 'package:straydogsadmin/model/org/org_model.dart';
@@ -32,7 +33,7 @@ class MainCubit extends Cubit<MainStates> {
   final List<Widget> screensWeb = [
     HomeScreenWeb(),
     const RequestsScreen(),
-    const OrgRequestsScreens(),
+    OrgRequestsScreens(),
     const OrganizationScreen(),
     ProfileScreen(),
   ];
@@ -40,7 +41,7 @@ class MainCubit extends Cubit<MainStates> {
   final List<Widget> screensMobile = [
     HomeScreenMobile(),
     const RequestsScreen(),
-    const OrgRequestsScreens(),
+    OrgRequestsScreens(),
     const OrganizationScreen(),
     ProfileScreen(),
   ];
@@ -187,7 +188,7 @@ class MainCubit extends Cubit<MainStates> {
   List<dynamic> totalRequests = [];
 
   void getRequests() {
-    DioHelper.getData(url: TOTAL_REQUESTS)
+    DioHelper.getData(url: GET_ACCEPTED)
         .then((value) {
           totalRequests = value.data;
           emit(MainGetRequestsDataState());
@@ -320,4 +321,15 @@ class MainCubit extends Cubit<MainStates> {
           emit(MainGetAllRequestsDataErrorState(error.toString()));
         });
   }
+
+  Future<String> getAddressFromLatLng(double lat, double lng) async {
+    try {
+      final GeoCode geoCode = GeoCode();
+      final Address address = await geoCode.reverseGeocoding(latitude: lat, longitude: lng);
+      return "${address.streetAddress}, ${address.city}, ${address.countryName}";
+    } catch (e) {
+      return "Unknown location";
+    }
+  }
+
 }

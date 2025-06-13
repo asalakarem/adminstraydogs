@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:straydogsadmin/layout/cubit/cubit.dart';
@@ -19,8 +21,8 @@ class OrgRequestsInfoScreen extends StatelessWidget {
           appBar: AppBar(title: const Text('Organization Requests Info')),
           body: ListView.builder(
             padding: const EdgeInsets.all(20.0),
-            itemBuilder:
-                (context, index) => buildRequestItem(cubit.allRequests[index]),
+            itemBuilder: (context, index) =>
+                buildRequestItem(cubit.allRequests[index], context),
             itemCount: cubit.allRequests.length,
           ),
         );
@@ -28,131 +30,84 @@ class OrgRequestsInfoScreen extends StatelessWidget {
     );
   }
 
-  Widget buildRequestItem(RequestModel model) {
+  Widget buildRequestItem(RequestModel model, BuildContext context) {
+    final theme = Theme.of(context);
+    final isWide = MediaQuery.of(context).size.width > 700;
+
+    Widget buildInfoRow(IconData icon, String label, {bool isExpandable = false}) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(icon, size: 20, color: Colors.grey[700]),
+            const SizedBox(width: 8),
+            isExpandable
+                ? Expanded(child: Text(label, style: theme.textTheme.bodyMedium))
+                : Text(label, style: theme.textTheme.bodyMedium),
+          ],
+        ),
+      );
+    }
+
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      elevation: 2,
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      elevation: 3,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                const Icon(Icons.numbers, size: 20),
-                const SizedBox(width: 8),
-                Text('Request ID: ${model.requestId}'),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                const Icon(Icons.badge, size: 20),
-                const SizedBox(width: 8),
-                Text('User ID: ${model.userId}'),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                const Icon(Icons.person, size: 20),
-                const SizedBox(width: 8),
-                Text('User Name: ${model.userName}'),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                const Icon(Icons.phone, size: 20),
-                const SizedBox(width: 8),
-                Text('Phone: ${model.phoneNumber}'),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                const Icon(Icons.location_on, size: 20),
-                const SizedBox(width: 8),
-                Text('Address: ${model.streetAddress}'),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                const Icon(Icons.description, size: 20),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    'Description: ${model.description}',
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+            if (model.dogImage != null)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.memory(
+                  base64Decode(model.dogImage!),
+                  width: double.infinity,
+                  height: isWide ? 300 : 200,
+                  fit: BoxFit.cover,
                 ),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                const Icon(Icons.pets, size: 20),
-                const SizedBox(width: 8),
-                Text('Dogs Count: ${model.dogsCount}'),
-              ],
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                const Icon(Icons.timelapse, size: 20),
-                const SizedBox(width: 8),
-                Text('Submitted: ${model.submissionTime?.substring(0, 10)}'),
-              ],
-            ),
+              ),
+            const SizedBox(height: 16),
+            buildInfoRow(Icons.numbers, 'Request ID: ${model.requestId}'),
+            buildInfoRow(Icons.badge, 'User ID: ${model.userId}'),
+            buildInfoRow(Icons.person, 'User Name: ${model.userName}'),
+            buildInfoRow(Icons.phone, 'Phone: ${model.phoneNumber}'),
+            buildInfoRow(Icons.location_on, 'Address: ${model.streetAddress}', isExpandable: true),
+            buildInfoRow(Icons.description, 'Description: ${model.description}', isExpandable: true),
+            buildInfoRow(Icons.pets, 'Dogs Count: ${model.dogsCount}'),
+            buildInfoRow(Icons.timelapse, 'Submitted: ${model.submissionTime?.substring(0, 10)}'),
+
             if (model.status == 'Accepted') ...[
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  const Icon(Icons.check_circle, size: 20),
-                  const SizedBox(width: 8),
-                  Text('Accepted: ${model.acceptedDate?.substring(0, 10)}'),
-                ],
-              ),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  const Icon(Icons.person, size: 20),
-                  const SizedBox(width: 8),
-                  Text('Accepted By: ${model.acceptedNgo}'),
-                ],
-              ),
+              const Divider(height: 24),
+              buildInfoRow(Icons.check_circle, 'Accepted: ${model.acceptedDate?.substring(0, 10)}'),
+              buildInfoRow(Icons.person, 'Accepted By: ${model.acceptedNgo}'),
             ],
+
             if (model.status == 'Mission Done') ...[
+              const Divider(height: 24),
+              buildInfoRow(Icons.check_circle, 'Mission Done: ${model.missionDoneDate?.substring(0, 10)}'),
+              buildInfoRow(Icons.person, 'Mission Done By: ${model.missionDoneNgo}'),
               const SizedBox(height: 8),
-              Row(
-                children: [
-                  const Icon(Icons.check_circle, size: 20),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Mission Done: ${model.missionDoneDate?.substring(0, 10)}',
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  const Icon(Icons.person, size: 20),
-                  const SizedBox(width: 8),
-                  Text('Mission Done By: ${model.missionDoneNgo}'),
-                ],
+              FutureBuilder<String>(
+                future: MainCubit.get(context).getAddressFromLatLng(model.latitude, model.longitude),
+                builder: (context, snapshot) {
+                  String text;
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    text = 'Loading address...';
+                  } else if (snapshot.hasError) {
+                    text = 'Address not found';
+                  } else {
+                    text = snapshot.data!;
+                  }
+                  return buildInfoRow(Icons.location_on, text, isExpandable: true);
+                },
               ),
             ],
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                const Icon(Icons.info_outline, size: 20),
-                const SizedBox(width: 8),
-                Text('Status: ${model.status}'),
-              ],
-            ),
+
+            const Divider(height: 24),
+            buildInfoRow(Icons.info_outline, 'Status: ${model.status}'),
           ],
         ),
       ),

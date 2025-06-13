@@ -7,7 +7,9 @@ import 'package:straydogsadmin/modules/org_requests/org_requests_info/org_reques
 import 'package:straydogsadmin/shared/components/components.dart';
 
 class OrgRequestsScreens extends StatelessWidget {
-  const OrgRequestsScreens({super.key});
+  final searchController = TextEditingController();
+
+  OrgRequestsScreens({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +26,28 @@ class OrgRequestsScreens extends StatelessWidget {
                 'Organization Requests',
                 style: Theme.of(context).textTheme.headlineLarge,
               ),
+              SizedBox(
+                width: double.infinity,
+                child: SearchBar(
+                  padding: const WidgetStatePropertyAll<EdgeInsets>(
+                    EdgeInsets.symmetric(horizontal: 16.0),
+                  ),
+                  leading: const Icon(Icons.search),
+                  hintText: 'Search',
+                  controller: searchController,
+                  onChanged: (value) {
+                    cubit.filterOrg(value);
+                  },
+                  onSubmitted: (value) {
+                    cubit.filterOrg(value);
+                  },
+                ),
+              ),
               Expanded(
                 child: ListView.builder(
-                  itemBuilder:
-                      (context, index) =>
-                          buildItem(cubit.organizations[index], context),
-                  itemCount: cubit.organizations.length,
+                  itemBuilder: (context, index) =>
+                      buildItem(cubit.filteredOrg[index], context),
+                  itemCount: cubit.filteredOrg.length,
                 ),
               ),
             ],

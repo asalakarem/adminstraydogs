@@ -41,6 +41,7 @@ dependencies:
   fl_chart: ^1.0.0
   dio: ^5.8.0+1
   flutter_slidable: ^4.0.0
+  geocode: ^1.0.3
 
 dev_dependencies:
   flutter_test:
